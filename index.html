@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Justin A. Panaligan — Computer Engineer &amp; Creative</title>
+<meta name="description" content="Portfolio of Justin A. Panaligan: embedded systems, web projects and video edits.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<canvas id="smoke" aria-hidden="true"></canvas>
+
+<!-- NAV: Home / Projects / Contact -->
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">JAPE</a>
+    <div class="navr">
+      <a href="#top" data-nav="home">Home</a>
+      <a href="#projects" data-nav="projects">Projects</a>
+      <a href="#contact" data-nav="contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+  <div class="wrap">
+    <header class="hero">
+      <p class="eyebrow">Hi, my name is</p>
+      <h1>Justin A. Panaligan</h1>
+      <p class="type" id="type" aria-live="off"></p>
+      <a class="cta" href="#contact">CONTACT ME</a>
+    </header>
+
+    <!-- ABOUT: portrait + role + bio -->
+    <div class="about reveal">
+      <figure class="portrait">
+        <!-- EDIT: put your photo at assets/images/portrait.jpg (or change the src) -->
+        <img src="assets/images/portrait.jpg" alt="Portrait of Justin A. Panaligan" onerror="this.parentElement.classList.add('empty')">
+      </figure>
+      <div class="about-text">
+        <div class="role">Future Computer Engineer &amp; Aspiring content creator.</div>
+        <div class="bio">
+          <p>I'm a 4th-year Computer Engineering student at Batangas State University who builds embedded systems, IoT devices and websites. Outside the lab I edit videos for content creation and for fun, turning raw footage into clean, story-first visuals.</p>
+          <span class="loc">Philippines</span><!-- EDIT: your city -->
+        </div>
+      </div>
+    </div>
+
+    <section id="projects">
+      <div class="head reveal">
+        <h2>Projects</h2>
+        <div class="tabs" role="tablist">
+          <span class="ind" id="ind"></span>
+          <button role="tab" aria-selected="true" data-k="edit">EDITS</button>
+          <button role="tab" aria-selected="false" data-k="eng">ENGINEERING</button>
+        </div>
+      </div>
+      <div class="grid" id="grid"></div>
+      <button class="seemore" id="more">SEE MORE ↓</button>
+    </section>
+
+    <section id="contact">
+      <h2 class="get reveal">Get in touch</h2>
+      <p class="invite reveal">Have a project, a build or an edit in mind? Send me a message.</p>
+      <div class="cgrid reveal" id="cgrid"></div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 Justin A. Panaligan. All rights reserved.</span><span>// built with caffeine and the love for the game</span></div>
+</footer>
+
+<div id="lb" hidden role="dialog" aria-modal="true" aria-label="Project gallery">
+  <button class="lbb" id="lx" aria-label="Close">✕</button>
+  <button class="lbb" id="lp" aria-label="Previous">←</button>
+  <div id="lbs"></div>
+  <button class="lbb" id="ln" aria-label="Next">→</button>
+  <div id="lbc"></div>
+</div>
+
+<!-- Order matters: content first, then main, then smoke -->
+<script src="js/content.js"></script>
+<script src="js/main.js"></script>
+<script src="js/smoke.js"></script>
+</body>
+</html>
