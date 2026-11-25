@@ -24,11 +24,12 @@ const watch = r => (r || document).querySelectorAll('.reveal:not(.in)').forEach(
 /* nav: highlight the current section */
 (() => {
   const links = [...document.querySelectorAll('[data-nav]')];
-  const pr = $('#projects'), ct = $('#contact');
+  const ab = $('#about'), pr = $('#projects'), ct = $('#contact'), dock = $('#dock');
   let raf;
   const upd = () => {
     const y = scrollY + innerHeight * .35;
-    const k = (innerHeight + scrollY >= document.body.scrollHeight - 4) || y >= ct.offsetTop ? 'contact' : y >= pr.offsetTop ? 'projects' : 'home';
+    const k = (innerHeight + scrollY >= document.body.scrollHeight - 4) || y >= ct.offsetTop ? 'contact' : y >= pr.offsetTop ? 'projects' : y >= ab.offsetTop ? 'about' : 'home';
+    dock.classList.toggle('mini', scrollY > 60);
     links.forEach(a => a.classList.toggle('active', a.dataset.nav === k));
   };
   addEventListener('scroll', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(upd); }, { passive: true });
@@ -97,11 +98,13 @@ addEventListener('keydown', e => {
 });
 
 /* contact: links open a new tab, handles copy to clipboard */
+const IC = {"GITHUB": "<path d=\"M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22\"/>", "LINKEDIN": "<path d=\"M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z\"/><circle cx=\"4\" cy=\"4\" r=\"2\"/>", "YOUTUBE": "<path d=\"M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z\"/><path d=\"M9.75 15.02 15.5 11.75 9.75 8.48z\"/>", "TIKTOK": "<path d=\"M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5M14 3c.3 2.4 2 4.2 5 4.5\"/>", "FACEBOOK": "<path d=\"M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z\"/>", "INSTAGRAM": "<rect x=\"2\" y=\"2\" width=\"20\" height=\"20\" rx=\"5\"/><path d=\"M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01\"/>", "GMAIL": "<path d=\"M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z\"/><path d=\"m22 6-10 7L2 6\"/>", "DISCORD": "<path d=\"M7 6c3-1 7-1 10 0 2 3 3 6 3 10-1.500 1.200-3 1.800-4.500 2l-1-1.800M7 6C5 9 4 12 4 16c1.500 1.200 3 1.800 4.500 2l1-1.800M9 13h.01M15 13h.01\"/>", "TELEGRAM": "<path d=\"M22 2 11 13M22 2l-7 20-4-9-9-4z\"/>"};
+const ico = k => `<svg class="ci" viewBox="0 0 24 24" aria-hidden="true">${IC[k] || ''}</svg>`;
 $('#cgrid').innerHTML = C.map(c => c[2]
-  ? `<button class="cbtn" data-v="${c[1]}"><span>${c[0]}</span><span class="i">⧉</span></button>`
-  : `<a class="cbtn" href="${c[1]}" target="_blank" rel="noopener noreferrer"><span>${c[0]}</span><span>↗</span></a>`).join('');
+  ? `<button class="cbtn" data-v="${c[1]}"><span class="lab">${ico(c[0])}<b>${c[0]}</b></span><span class="i">⧉</span></button>`
+  : `<a class="cbtn" href="${c[1]}" target="_blank" rel="noopener noreferrer"><span class="lab">${ico(c[0])}<b>${c[0]}</b></span><span>↗</span></a>`).join('');
 document.querySelectorAll('button.cbtn').forEach(b => b.onclick = async () => {
-  const v = b.dataset.v, l = b.firstChild, ic = b.lastChild, old = l.textContent;
+  const v = b.dataset.v, l = b.querySelector('b'), ic = b.lastChild, old = l.textContent;
   try { await navigator.clipboard.writeText(v); }
   catch (_) { const a = document.createElement('textarea'); a.value = v; document.body.appendChild(a); a.select(); document.execCommand('copy'); a.remove(); }
   b.classList.add('ok'); l.textContent = 'COPIED!'; ic.textContent = '✓';
@@ -109,3 +112,25 @@ document.querySelectorAll('button.cbtn').forEach(b => b.onclick = async () => {
 });
 
 render(false); watch(); requestAnimationFrame(moveInd);
+
+/* dock magnification: items near the cursor swell, like the macOS dock */
+(() => {
+  const dock = $('#dock'), items = [...dock.querySelectorAll('.dk')];
+  if (!matchMedia('(hover:hover)').matches || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  dock.addEventListener('pointermove', e => items.forEach(el => {
+    const r = el.getBoundingClientRect(), d = Math.abs(e.clientX - (r.left + r.width / 2));
+    el.style.transform = `scale(${1 + .14 * Math.exp(-(d * d) / 6000)})`;
+  }));
+  dock.addEventListener('pointerleave', () => items.forEach(el => el.style.transform = ''));
+})();
+
+/* welcome intro: blurred site -> "Welcome" fades in and out -> blur dissolves */
+(() => {
+  const box = $('#intro'), w = box.firstElementChild;
+  if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  document.body.classList.add('lock'); scrollTo(0, 0);
+  setTimeout(() => w.classList.add('in'), 250);
+  setTimeout(() => w.classList.add('fade'), 2000);
+  setTimeout(() => box.classList.add('out'), 2600);
+  setTimeout(() => { box.remove(); document.body.classList.remove('lock'); }, 3900);
+})();

@@ -15,8 +15,8 @@ const TITLES = ['I PLAY.', 'I EDIT.', 'I AM THEREFORE, I AM.'];
 // YouTube links get their thumbnail automatically.
 const P = {
   edit: [
-   { t: 'Baguio Montage', d: 'Simple edit about my trip to Baguio featuring You Owe Me by Malcom Todd.', tags: ['Premiere Pro'], media: 'https://www.youtube.com/embed/1i_HowoN1hk', links: [['WATCH', 'https://youtu.be/1i_HowoN1hk'], ['VIEW PROJECT', '#']] },
-{ t: 'After School - Valorant Edit', d: 'A fast-paced edit with transitions and effects featuring After School by Weeekly', tags: ['Premiere Pro'], media: 'https://www.youtube.com/embed/VmDUjzPr_Ek', links: [['WATCH', 'https://youtu.be/VmDUjzPr_Ek'], ['VIEW PROJECT', '#']] },
+   { t: 'Baguio Montage', d: 'Simple edit about my trip to Baguio featuring You Owe Me by Malcom Todd.', tags: ['Premiere Pro'], media: 'https://www.youtube.com/embed/1i_HowoN1hk', links: [['WATCH', 'https://youtu.be/1i_HowoN1hk']] },
+{ t: 'After School - Valorant Edit', d: 'A fast-paced edit with transitions and effects featuring After School by Weeekly', tags: ['Premiere Pro'], media: 'https://www.youtube.com/embed/VmDUjzPr_Ek', links: [['WATCH', 'https://youtu.be/VmDUjzPr_Ek']] },
     { t: 'COMING SOON', d: 'COMING SOON.', tags: ['COMING SOON'], media: '', links: [['COMING SOON', '#'], ['COMING SOON', '#']] },
     { t: 'COMING SOON', d: 'COMING SOON', tags: ['COMING SOON'], media: '', links: [['COMING SOON', '#'], ['COMING SOON', '#']] }
   ],
